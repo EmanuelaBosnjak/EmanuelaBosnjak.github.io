@@ -1,0 +1,72 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  font-family: "Noto Sans", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all 600ms ease;
+
+  --primary-color: #acbac4;
+  --secondary-color: #e1d9bc;
+  --background-color: #f0f0db;
+  --text-color: #30364f;
+
+  &.dark {
+    --primary-color: #5b5271;
+    --secondary-color: #484564;
+    --background-color: #231c35;
+    --text-color: #f0f0db;
+  }
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* https://codepen.io/olegmilshtein/pen/jrWrqV */
+body::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background-image:
+    linear-gradient(
+      to top,
+      #ffffff33 33.33333%,
+      #ffffff66 33.33333%,
+      #ffffff66 66.66666%,
+      #ffffff99 66.66666%
+    ),
+    linear-gradient(
+      to right,
+      #ff0000b3 33.33333%,
+      #00ff00b3 33.33333%,
+      #00ff00b3 66.66666%,
+      #0000ffb3 66.66666%
+    );
+  --pixel-size: 3px;
+  background-size: var(--pixel-size) var(--pixel-size);
+  mix-blend-mode: multiply;
+}
