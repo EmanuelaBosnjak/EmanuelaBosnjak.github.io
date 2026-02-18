@@ -1,7 +1,14 @@
+:root {
+  interpolate-size: allow-keywords;
+}
+
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  transition:
+    color 300ms ease,
+    background-color 300ms ease;
 }
 
 html,
@@ -13,32 +20,29 @@ body,
 
 #app {
   display: flex;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Kiwi Maru", sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
-  transition: all 600ms ease;
+  overflow-y: auto;
+  overflow-x: visible;
 
-  --primary-color: #acbac4;
-  --secondary-color: #e1d9bc;
-  --background-color: #f0f0db;
-  --text-color: #30364f;
+  --text-color: #22223b;
+  --primary-color: #4a4e69;
+  --secondary-color: #9a8c98;
+  --sec-background-color: #c9ada7;
+  --background-color: #f2e9e4;
 
   &.dark {
+    /* --text-color: #f0f0db;
     --primary-color: #5b5271;
     --secondary-color: #484564;
-    --background-color: #231c35;
-    --text-color: #f0f0db;
+    --background-color: #231c35; */
+    --text-color: #f2e9e4;
+    --primary-color: #c9ada7;
+    --secondary-color: #9a8c98;
+    --sec-background-color: #4a4e69;
+    --background-color: #22223b;
   }
-}
-
-button {
-  background-color: var(--primary-color);
-  color: var(--text-color);
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
 }
 
 /* https://codepen.io/olegmilshtein/pen/jrWrqV */

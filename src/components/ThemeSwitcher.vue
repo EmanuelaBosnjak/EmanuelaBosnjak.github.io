@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core';
-import { fairyDustCursor } from 'cursor-effects';
-import { onMounted, ref } from 'vue';
+import { fairyDustCursor, type CursorEffectResult } from 'cursor-effects';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const savedTheme = useLocalStorage('theme', matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-const cursorEffect = ref<any>(null);
+const cursorEffect = ref<CursorEffectResult>();
 
 function initCursorEffect() {
   if (cursorEffect.value) {
@@ -36,6 +36,10 @@ onMounted(() => {
   applyTheme(savedTheme.value);
   initCursorEffect();
 });
+
+onBeforeUnmount(() => {
+  cursorEffect.value?.destroy();
+})
 </script>
 
 <template>
@@ -48,11 +52,14 @@ onMounted(() => {
 
 <style scoped>
 button {
+  color: var(--text-color);
+  cursor: pointer;
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--background-color);
+  border-width: 0px;
+  border-radius: 2px;
   padding: 0.5rem;
 }
 </style>
