@@ -44,13 +44,20 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=brightness_7,moon_stars&display=block"
     />
 
+    <style>
+      html {
+        background-color: #f2e9e4;
+        &.dark {
+          background-color: #22223b;
+        }
+      }
+    </style>
     <script>
       // fix fouc
       const savedTheme = localStorage.getItem("theme");
       const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
       if (savedTheme !== "light" && prefersDark)
-        document.documentElement.style.backgroundColor = "#22223b";
-      else document.documentElement.style.backgroundColor = "#f2e9e4";
+        document.documentElement.classList.add("dark");
     </script>
   </head>
   <body>
