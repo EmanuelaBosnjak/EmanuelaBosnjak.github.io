@@ -2,5 +2,6 @@
 portfolio site
 
 todo:
-- fix fouc
+- ~~fix fouc~~
 - add backgrounds
+- knob pull fx for theme toggle

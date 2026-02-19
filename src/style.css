@@ -1,7 +1,3 @@
-:root {
-  interpolate-size: allow-keywords;
-}
-
 * {
   margin: 0px;
   padding: 0px;
@@ -14,35 +10,31 @@
 html,
 body,
 #app {
-  width: 100%;
-  height: 100%;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 #app {
-  display: flex;
-  font-family: "Kiwi Maru", sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  overflow-y: auto;
-  overflow-x: visible;
-
+  /* update index.html if changing bg color */
   --text-color: #22223b;
   --primary-color: #4a4e69;
   --secondary-color: #9a8c98;
   --sec-background-color: #c9ada7;
   --background-color: #f2e9e4;
-
   &.dark {
-    /* --text-color: #f0f0db;
-    --primary-color: #5b5271;
-    --secondary-color: #484564;
-    --background-color: #231c35; */
     --text-color: #f2e9e4;
     --primary-color: #c9ada7;
     --secondary-color: #9a8c98;
     --sec-background-color: #4a4e69;
     --background-color: #22223b;
   }
+
+  display: flex;
+  font-family: "Kiwi Maru", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 /* https://codepen.io/olegmilshtein/pen/jrWrqV */
