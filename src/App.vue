@@ -1,6 +1,34 @@
 <script setup lang="ts">
+import { fairyDustCursor, type CursorEffectResult } from 'cursor-effects';
 import Navbar from './components/Navbar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import isDark from './theme';
+
+const cursorEffect = ref<CursorEffectResult>();
+
+function initCursorEffect() {
+  if (cursorEffect.value) {
+    cursorEffect.value.destroy();
+  }
+  cursorEffect.value = fairyDustCursor({
+    colors: [
+      getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim(),
+    ]
+  });
+}
+
+onMounted(() => {
+  initCursorEffect();
+});
+
+watch(isDark, () => {
+  initCursorEffect();
+}, { immediate: true, flush: "post" });
+
+onBeforeUnmount(() => {
+  cursorEffect.value?.destroy();
+});
 </script>
 
 <template>
@@ -9,8 +37,8 @@ import ThemeSwitcher from './components/ThemeSwitcher.vue';
     <div class="title">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" v-html="$route.meta.svg">
       </svg>
-      {{ $route.meta.title }}
-      <svg></svg>
+      <div>{{ $route.meta.title }}</div>
+      <div><!--to keep title in center--></div>
       <div class="window-btns">
         <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -37,7 +65,7 @@ import ThemeSwitcher from './components/ThemeSwitcher.vue';
 <style scoped>
 .window {
   flex: 1;
-  max-width: 800px;
+  max-width: calc(min(800px, 100%));
   min-height: 500px;
   margin: auto;
   border: 2px solid var(--sec-background-color);
@@ -55,6 +83,7 @@ import ThemeSwitcher from './components/ThemeSwitcher.vue';
   padding: 0.3em;
   color: var(--primary-color);
   background-color: var(--sec-background-color);
+  user-select: none;
 
   svg {
     height: 1.3em;
@@ -65,7 +94,7 @@ import ThemeSwitcher from './components/ThemeSwitcher.vue';
   svg :deep(path) {
     fill: var(--primary-color);
   }
-  
+
   .window-btns {
     position: absolute;
     right: 0.5em;
