@@ -44,26 +44,17 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=brightness_7,moon_stars&display=block"
     />
 
-    <style>
-      html {
-        background-color: #f2e9e4;
-        &.dark {
-          background-color: #22223b;
-        }
-      }
-      body {
-        background-color: inherit;
-      }
-    </style>
     <script>
-      // fix fouc
       const savedTheme = localStorage.getItem("theme");
       const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
-      if (savedTheme !== "light" && prefersDark)
+      if (
+        (prefersDark && savedTheme === "auto") ||
+        (!prefersDark && savedTheme === "dark")
+      )
         document.documentElement.classList.add("dark");
     </script>
-    <script type="module" crossorigin src="/assets/index-CLZ4t6yu.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-qrFOdWmM.css">
+    <script type="module" crossorigin src="/assets/index-uWyDy47N.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CW5Z07rq.css">
   </head>
   <body>
     <div id="app"></div>
