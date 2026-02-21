@@ -2,5 +2,5 @@
 portfolio site
 
 todo:
-- add backgrounds
+- ~~add backgrounds~~
 - knob pull fx for theme toggle
