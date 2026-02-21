@@ -80,7 +80,8 @@ onBeforeUnmount(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
+  background-color: rgb(from var(--background-color) r g b / 0.7);
   min-width: calc(min(800px, 100%));
   max-width: calc(min(800px, 100%));
   min-height: 500px;
