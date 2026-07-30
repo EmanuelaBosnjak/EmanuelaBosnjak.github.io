@@ -6,17 +6,17 @@ export const CONTACT_EMAIL = "bemanuela3@gmail.com";
 type Msg = { id: number; from: string; subject: string; preview: string; body: string; unread?: boolean; starred?: boolean; tag?: string };
 
 const messages: Msg[] = [
-  { id: 1, from: "Lina Torvik <lina@northlightgallery.se>", subject: "Winter Rooms — solo invitation", preview: "We'd love to host your Iceflower series in February…", body: "Dear Emanuela,\n\nWe would love to host your Iceflower series in our February program at North Light Gallery. Six weeks, one wall, quiet lighting.\n\nWe can offer a modest honorarium and cover framing. Let me know if you have room in your calendar.\n\nWarmly,\nLina", unread: true, starred: true, tag: "invite" },
-  { id: 2, from: "commissions@studio-quiet.co", subject: "Illustration commission — book cover", preview: "Small press, poetry, deadline in April.", body: "Hi Emanuela — Studio Quiet here. We're publishing a poetry collection about forests and static; your work feels like the exact texture we're chasing. Deadline is loose (April). Budget attached.\n\nCould you share availability?", unread: true, tag: "work" },
-  { id: 3, from: "root@frostos.local", subject: "SYSTEM :: cache warm", preview: "Frost cache primed. Wolf sighted at edge of grid.", body: "boot log 022 attached.\nnothing to worry about. the wolf has clearance.\n\n— root", tag: "system" },
+  { id: 1, from: "Lina Torvik <lina@northlightgallery.se>", subject: "Winter Rooms | solo invitation", preview: "We'd love to host your Iceflower series in February…", body: "Dear Emanuela,\n\nWe would love to host your Iceflower series in our February program at North Light Gallery. Six weeks, one wall, quiet lighting.\n\nWe can offer a modest honorarium and cover framing. Let me know if you have room in your calendar.\n\nWarmly,\nLina", unread: true, starred: true, tag: "invite" },
+  { id: 2, from: "commissions@studio-quiet.co", subject: "Illustration commission | book cover", preview: "Small press, poetry, deadline in April.", body: "Hi Emanuela, Studio Quiet here. We're publishing a poetry collection about forests and static, and your work feels like the exact texture we're after. The deadline is loose (April). Budget attached.\n\nCould you share availability?", unread: true, tag: "work" },
+  { id: 3, from: "root@frostos.local", subject: "SYSTEM :: cache warm", preview: "Frost cache primed. Wolf sighted at edge of grid.", body: "boot log 022 attached.\nnothing to worry about. the wolf has clearance.\n\nroot", tag: "system" },
   { id: 4, from: "J.", subject: "the cassette", preview: "I found it. Behind the radiator. Of course.", body: "found the cassette. behind the radiator. of course.\ncoffee friday?\n\nj.", unread: true },
-  { id: 5, from: "webring@slowweb.club", subject: "New member request", preview: "hello.pines wants to join the frost webring", body: "hello.pines requests membership. site preview looks good — hand-coded, small, quiet. approve?" },
+  { id: 5, from: "webring@slowweb.club", subject: "New member request", preview: "hello.pines wants to join the frost webring", body: "hello.pines requests membership. the site looks good: hand-coded, small, and quiet. approve?" },
   { id: 6, from: "Mira Halden <mira@northlightgallery.se>", subject: "Re: prints for the shop", preview: "The A5 riso batch sold out already, congrats.", body: "Just so you know: the A5 riso batch is gone. Restock when you can. People keep asking about 'Cathedral of Pines' specifically.\n\nMira" },
-  { id: 7, from: "no-reply@arcade.itch", subject: "SIGNAL//FOREST — 12 new plays", preview: "Weekly digest: 12 plays, avg session 4m21s", body: "Your tiny game keeps ticking along.\nTop referrer: your own portfolio.\n(that tracks.)" },
+  { id: 7, from: "no-reply@arcade.itch", subject: "SIGNAL//FOREST | 12 new plays", preview: "Weekly digest: 12 plays, avg session 4m21s", body: "Your tiny game keeps ticking along.\nTop referrer: your own portfolio.\n(that tracks.)" },
   { id: 8, from: "Papa", subject: "Fwd: recipe (again)", preview: "Sending the walnut bread thing. Don't lose it.", body: "here is the walnut bread recipe. for the fourth time. put it somewhere you'll actually find it.\n\np." },
-  { id: 9, from: "unknown@—", subject: "you left the window open", preview: "the signal came through", body: "the signal came through last night. i think it liked the pines.\n\n(don't reply.)", starred: true, tag: "?" },
-  { id: 10, from: "R. Osma <r.osma@museum.hr>", subject: "Group show — Adriatic Winters", preview: "Would you consider a piece for the March opening?", body: "Emanuela — long time. We're curating 'Adriatic Winters' and I keep coming back to your Quiet Signal. Could we borrow one? Insurance & transport covered.\n\nR.", tag: "invite" },
-  { id: 11, from: "hello@risoprint.eu", subject: "Your quote is ready", preview: "40 copies, 2 colors (frost + fog), ready to print", body: "Quote #4412 attached. Turnaround 6 working days. Confirm and we ship.\n\n— riso team" },
+  { id: 9, from: "unknown@void", subject: "you left the window open", preview: "the signal came through", body: "the signal came through last night. i think it liked the pines.\n\n(don't reply.)", starred: true, tag: "?" },
+  { id: 10, from: "R. Osma <r.osma@museum.hr>", subject: "Group show | Adriatic Winters", preview: "Would you consider a piece for the March opening?", body: "Emanuela, long time. We're curating 'Adriatic Winters' and I keep coming back to your Quiet Signal. Could we borrow one? Insurance and transport are covered.\n\nR.", tag: "invite" },
+  { id: 11, from: "hello@risoprint.eu", subject: "Your quote is ready", preview: "40 copies, 2 colors (frost + fog), ready to print", body: "Quote #4412 attached. Turnaround 6 working days. Confirm and we ship.\n\nriso team" },
   { id: 12, from: "birds@balcony", subject: "seeds pls", preview: "the feeder is empty. this is unacceptable.", body: "seeds. pls. the feeder is empty. the situation is dire.\n\nmanagement" },
 ];
 
@@ -28,7 +28,7 @@ export function MailApp() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const mailto = () => {
     const subject = encodeURIComponent(`portfolio message from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} <${form.email}>`);
+    const body = encodeURIComponent(`${form.message}\n\n${form.name} <${form.email}>`);
     return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
@@ -127,4 +127,3 @@ export function MailApp() {
     </div>
   );
 }
-

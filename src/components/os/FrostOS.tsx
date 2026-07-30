@@ -15,7 +15,7 @@ const APPS: Array<{ id: AppId; title: string; Icon: any; defaultSize: { w: numbe
   { id: "files", title: "Files", Icon: FolderOpen, defaultSize: { w: 780, h: 520 } },
   { id: "mail", title: "Mail", Icon: Mail, defaultSize: { w: 820, h: 540 } },
   { id: "browse", title: "Browse", Icon: Compass, defaultSize: { w: 820, h: 560 } },
-  { id: "terminal", title: "Terminal — SIGNAL//FOREST", Icon: TerminalSquare, defaultSize: { w: 780, h: 520 } },
+  { id: "terminal", title: "Terminal | SIGNAL//FOREST", Icon: TerminalSquare, defaultSize: { w: 780, h: 520 } },
   { id: "theme", title: "Theme", Icon: Palette, defaultSize: { w: 560, h: 480 } },
 ];
 
@@ -97,9 +97,9 @@ export function FrostOS({ onExit }: { onExit?: () => void }) {
 
   return (
     <div className="relative flex h-dvh w-full flex-col overflow-hidden" style={{ background: "var(--wallpaper)" }}>
-      <StatusBar hint={!anyOpen ? "welcome — pick an app from the dock" : undefined} onExit={onExit} />
+      <StatusBar hint={!anyOpen ? "welcome, pick an app from the dock" : undefined} onExit={onExit} />
 
-      {/* Desktop icons — clickable on every screen size */}
+      {/* Desktop icons, clickable on every screen size */}
       <div className="pointer-events-none absolute inset-x-0 top-9 bottom-0 select-none">
         <div className="pointer-events-auto grid grid-cols-3 gap-2 p-3 pr-16 sm:w-28 sm:grid-cols-1 sm:gap-4 sm:p-4 sm:pr-4">
           {APPS.map((a) => {
@@ -160,7 +160,7 @@ export function FrostOS({ onExit }: { onExit?: () => void }) {
         ))}
       </main>
 
-      {/* Dock — right side rail */}
+      {/* Dock, right side rail */}
       <nav
         aria-label="Dock"
         className="glass-strong pointer-events-auto fixed top-1/2 right-2 z-50 flex -translate-y-1/2 flex-col items-center gap-1.5 rounded-2xl px-1.5 py-2"
@@ -196,4 +196,3 @@ export function FrostOS({ onExit }: { onExit?: () => void }) {
     </div>
   );
 }
-

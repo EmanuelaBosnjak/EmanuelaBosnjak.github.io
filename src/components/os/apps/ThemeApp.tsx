@@ -18,8 +18,8 @@ export function ThemeApp() {
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         {[
-          { id: "dark", label: "Dark — winter forest", Icon: Moon, preview: "linear-gradient(135deg,#07080c,#12203b)" },
-          { id: "light", label: "Light — frost morning", Icon: Sun, preview: "linear-gradient(135deg,#eef2fb,#cad9f5)" },
+          { id: "dark", label: "Dark | winter forest", Icon: Moon, preview: "linear-gradient(135deg,#07080c,#12203b)" },
+          { id: "light", label: "Light | frost morning", Icon: Sun, preview: "linear-gradient(135deg,#eef2fb,#cad9f5)" },
         ].map((opt) => {
           const active = theme === opt.id;
           const Icon = opt.Icon;
@@ -54,4 +54,3 @@ export function ThemeApp() {
     </div>
   );
 }
-

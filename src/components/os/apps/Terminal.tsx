@@ -38,7 +38,7 @@ export function TerminalApp() {
   gameRef.current = game;
 
   const [lines, setLines] = useState<Line[]>([
-    { text: "frostos terminal — v1.4", kind: "sys" },
+    { text: "frostos terminal | v1.4", kind: "sys" },
     { text: "type 'help' for commands. arrow keys / wasd to move signal. touch dpad on mobile.", kind: "sys" },
   ]);
   const [input, setInput] = useState("");
@@ -131,7 +131,7 @@ export function TerminalApp() {
       push([
         { text: "emanuela bošnjak hofmaurerad" },
         { text: "artist · developer · signal-hunter" },
-        { text: "this is FrostOS — a fictional desktop portfolio." },
+        { text: "this is FrostOS, a fictional desktop portfolio." },
       ]);
     } else if (cmd === "gallery") {
       push({ text: "open Files → Gallery. the good stuff lives there.", kind: "ok" });
@@ -237,4 +237,3 @@ export function TerminalApp() {
     </div>
   );
 }
-

@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { Folder, FileText, Image as ImageIcon, Music, ChevronRight, Home, Eye, Sparkles } from "lucide-react";
+import { ARTWORKS } from "@/lib/artworks";
 
 type Node =
   | { kind: "folder"; name: string; hidden?: boolean; children: Node[] }
-  | { kind: "file"; name: string; ext: "txt" | "md" | "png" | "mp3" | "log"; body?: string; caption?: string };
+  | {
+      kind: "file";
+      name: string;
+      ext: "txt" | "md" | "png" | "webp" | "mp3" | "log";
+      body?: string;
+      caption?: string;
+      src?: string;
+    };
 
 const tree: Node = {
   kind: "folder",
@@ -12,16 +20,13 @@ const tree: Node = {
     {
       kind: "folder",
       name: "Gallery",
-      children: [
-        { kind: "file", name: "frost_study_01", ext: "png", caption: "study · frost geometry / gouache" },
-        { kind: "file", name: "wolf_shadow_02", ext: "png", caption: "shadow drift / mixed digital" },
-        { kind: "file", name: "cathedral_of_pines", ext: "png", caption: "cathedral of pines / oil" },
-        { kind: "file", name: "quiet_signal", ext: "png", caption: "quiet signal / print" },
-        { kind: "file", name: "moth_and_moon", ext: "png", caption: "moth & moon / ink" },
-        { kind: "file", name: "north_facing_window", ext: "png", caption: "north-facing window / photo" },
-        { kind: "file", name: "iceflower_series_iii", ext: "png", caption: "iceflower III / risograph" },
-        { kind: "file", name: "static_garden", ext: "png", caption: "static garden / digital" },
-      ],
+      children: ARTWORKS.map((artwork) => ({
+        kind: "file" as const,
+        name: artwork.name,
+        ext: "webp" as const,
+        caption: `${artwork.title} · ${artwork.kind}`,
+        src: artwork.src,
+      })),
     },
     {
       kind: "folder",
@@ -46,12 +51,12 @@ const tree: Node = {
       name: "Notes",
       children: [
         { kind: "file", name: "commission_pricing", ext: "txt", body: "small (A5): 120€\nmedium (A4): 240€\nlarge (A3+): from 480€\ndelivery: 2–4 weeks\ncontact via Mail app" },
-        { kind: "file", name: "reading_list_2026", ext: "md", body: "- The Living Mountain — Nan Shepherd\n- Woodland Radio — L. Marx\n- On Weathering — David Leatherbarrow\n- (loop) Piranesi — Susanna Clarke" },
+        { kind: "file", name: "reading_list_2026", ext: "md", body: "- The Living Mountain by Nan Shepherd\n- Woodland Radio by L. Marx\n- On Weathering by David Leatherbarrow\n- (loop) Piranesi by Susanna Clarke" },
         { kind: "file", name: "todo", ext: "txt", body: "[ ] finish iceflower iv\n[ ] answer J.\n[ ] rebuild webring index\n[x] feed the sourdough\n[ ] find that one cassette" },
       ],
     },
-    { kind: "file", name: "About", ext: "txt", body: "hi — i'm emanuela.\ni paint quiet things and write small programs about them.\nbased somewhere cold. answering mail slowly.\nthis desktop is my portfolio; wander at your own pace.\n\n— eb" },
-    { kind: "file", name: "readme", ext: "md", body: "# FrostOS\n\nYou're inside a fictional operating system. Nothing here needs installing.\nTry the Terminal — there's a small game called SIGNAL//FOREST." },
+    { kind: "file", name: "About", ext: "txt", body: "hi, i'm emanuela.\ni draw, make characters, and write small programs.\nbased somewhere cold and answering mail slowly.\nthis desktop is my portfolio, so look around at your own pace.\n\neb" },
+    { kind: "file", name: "readme", ext: "md", body: "# FrostOS\n\nYou're inside a fictional operating system. Nothing here needs installing.\nTry the Terminal. There's a small game called SIGNAL//FOREST." },
     {
       kind: "folder",
       name: ".hidden",
@@ -64,32 +69,16 @@ const tree: Node = {
   ],
 };
 
-const artColors = [
-  ["#0f1a33", "#546282"],
-  ["#1b2440", "#9cb2e8"],
-  ["#0a1120", "#7ba0e0"],
-  ["#25314e", "#cad9f5"],
-  ["#0d1220", "#5b7dc4"],
-  ["#12203b", "#a6bff0"],
-  ["#0f1a33", "#8fa7dc"],
-  ["#1a2544", "#c4d4f0"],
-];
-
-function ArtTile({ i, caption }: { i: number; caption: string }) {
-  const [a, b] = artColors[i % artColors.length];
+function ArtTile({ src, caption }: { src: string; caption: string }) {
   return (
     <figure className="group overflow-hidden rounded-xl border" style={{ borderColor: "var(--window-border)" }}>
-      <div
-        className="relative aspect-square w-full overflow-hidden"
-        style={{
-          background: `radial-gradient(120% 80% at ${20 + (i * 13) % 60}% ${30 + (i * 7) % 40}%, ${b}, ${a} 70%)`,
-        }}
-      >
-        <div className="absolute inset-0" style={{
-          backgroundImage:
-            "repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 8px)",
-        }} />
-        <div className="absolute inset-3 rounded-lg border border-white/10" />
+      <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--ink)]">
+        <img
+          src={src}
+          alt={caption}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
       </div>
       <figcaption className="mono truncate px-2 py-1.5 text-[10px] text-muted-foreground">{caption}</figcaption>
     </figure>
@@ -138,9 +127,12 @@ export function FilesApp() {
         <div className="os-scroll overflow-auto p-4">
           {isGallery ? (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {cwd.kind === "folder" && cwd.children.map((c, i) => (
+              {cwd.kind === "folder" && cwd.children.map((c) => (
                 <button key={c.name} onClick={() => setSelected(c)} className="focus-ring text-left">
-                  <ArtTile i={i} caption={(c as any).caption ?? c.name} />
+                  <ArtTile
+                    src={c.kind === "file" ? c.src ?? "" : ""}
+                    caption={c.kind === "file" ? c.caption ?? c.name : c.name}
+                  />
                 </button>
               ))}
             </div>
@@ -159,7 +151,7 @@ export function FilesApp() {
                   >
                     {c.kind === "folder" ? (
                       <Folder className="h-9 w-9" style={{ color: "var(--frost)" }} />
-                    ) : c.ext === "png" ? (
+                    ) : c.ext === "png" || c.ext === "webp" ? (
                       <ImageIcon className="h-9 w-9" style={{ color: "var(--milk)" }} />
                     ) : c.ext === "mp3" ? (
                       <Music className="h-9 w-9" style={{ color: "var(--milk)" }} />
@@ -187,12 +179,14 @@ export function FilesApp() {
               <div className="os-scroll mt-3 flex-1 overflow-auto rounded-xl border p-3 text-xs" style={{ borderColor: "var(--window-border)", background: "color-mix(in oklab, var(--ink) 25%, transparent)" }}>
                 {selected.kind === "file" && (selected.ext === "txt" || selected.ext === "md" || selected.ext === "log") ? (
                   <pre className="mono whitespace-pre-wrap leading-relaxed">{selected.body}</pre>
-                ) : selected.kind === "file" && selected.ext === "png" ? (
+                ) : selected.kind === "file" && (selected.ext === "png" || selected.ext === "webp") ? (
                   <div className="flex flex-col gap-2">
-                    <ArtTile i={selected.name.length} caption={selected.caption ?? ""} />
-                    <p className="mono text-[11px] text-muted-foreground">
-                      placeholder tile — a real print will replace this. ask via Mail.
-                    </p>
+                    <img
+                      src={selected.src}
+                      alt={selected.caption ?? selected.name}
+                      className="max-h-[62vh] w-full rounded-lg object-contain"
+                    />
+                    <p className="mono text-[11px] text-muted-foreground">{selected.caption}</p>
                   </div>
                 ) : selected.kind === "file" && selected.ext === "mp3" ? (
                   <div className="flex items-center gap-2">
@@ -214,4 +208,3 @@ export function FilesApp() {
     </div>
   );
 }
-

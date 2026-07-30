@@ -1,93 +1,86 @@
 import { useEffect, useRef } from "react";
 
-type P = { x: number; y: number; vx: number; vy: number; life: number; max: number; size: number; hue: number };
+const SPARK_LIFETIME = 900;
+const MIN_DISTANCE = 14;
+const MIN_INTERVAL = 34;
 
 export function SparkleCursor() {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(hover: none)").matches) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const layer = layerRef.current;
+    if (!layer) return;
 
-    let w = window.innerWidth;
-    let h = window.innerHeight;
-    let parts: P[] = [];
-    let raf = 0;
+    let lastX: number | null = null;
+    let lastY: number | null = null;
+    let lastSpawn = 0;
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const addSpark = (x: number, y: number, delay = 0) => {
+      window.setTimeout(() => {
+        if (!layer.isConnected) return;
+
+        const spark = document.createElement("span");
+        spark.className = "cursor-spark";
+        spark.textContent = "✦";
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.setProperty("--spark-drift-x", `${(Math.random() - 0.5) * 12}px`);
+        spark.style.setProperty("--spark-drift-y", `${-10 - Math.random() * 10}px`);
+        spark.style.setProperty("--spark-rotation", `${(Math.random() - 0.5) * 30}deg`);
+        spark.style.setProperty("--spark-scale", `${0.72 + Math.random() * 0.34}`);
+        layer.appendChild(spark);
+
+        window.setTimeout(() => spark.remove(), SPARK_LIFETIME + 80);
+      }, delay);
     };
 
-    const spawn = (x: number, y: number) => {
-      const n = 1 + Math.round(Math.random());
-      for (let i = 0; i < n; i++) {
-        if (parts.length > 180) break;
-        parts.push({
-          x: x + (Math.random() - 0.5) * 8,
-          y: y + (Math.random() - 0.5) * 8,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: -0.15 - Math.random() * 0.5,
-          life: 0,
-          max: 400 + Math.random() * 500,
-          size: 0.8 + Math.random() * 1.8,
-          hue: 200 + Math.random() * 60,
-        });
+    const onMove = (event: MouseEvent) => {
+      const { clientX: x, clientY: y } = event;
+      const now = performance.now();
+
+      if (lastX === null || lastY === null) {
+        lastX = x;
+        lastY = y;
+        addSpark(x, y);
+        lastSpawn = now;
+        return;
+      }
+
+      const distance = Math.hypot(x - lastX, y - lastY);
+      if (distance >= MIN_DISTANCE && now - lastSpawn >= MIN_INTERVAL) {
+        addSpark(x, y);
+        lastX = x;
+        lastY = y;
+        lastSpawn = now;
       }
     };
 
-    const onMove = (e: PointerEvent) => spawn(e.clientX, e.clientY);
-
-    let last = performance.now();
-    const tick = (now: number) => {
-      const dt = Math.min(48, now - last);
-      last = now;
-      ctx.clearRect(0, 0, w, h);
-      parts = parts.filter((p) => p.life < p.max);
-      for (const p of parts) {
-        p.life += dt;
-        p.x += p.vx;
-        p.y += p.vy;
-        const t = 1 - p.life / p.max;
-        ctx.globalAlpha = Math.max(0, t) * 0.9;
-        ctx.fillStyle = `hsl(${p.hue} 80% 82%)`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * t, 0, Math.PI * 2);
-        ctx.fill();
-        // tiny cross sparkle
-        ctx.strokeStyle = `hsl(${p.hue} 90% 90% / ${Math.max(0, t) * 0.5})`;
-        ctx.lineWidth = 0.6;
-        const r = p.size * 2.4 * t;
-        ctx.beginPath();
-        ctx.moveTo(p.x - r, p.y);
-        ctx.lineTo(p.x + r, p.y);
-        ctx.moveTo(p.x, p.y - r);
-        ctx.lineTo(p.x, p.y + r);
-        ctx.stroke();
+    const onDown = (event: MouseEvent) => {
+      for (let i = 0; i < 5; i += 1) {
+        addSpark(
+          event.clientX + (Math.random() - 0.5) * 18,
+          event.clientY + (Math.random() - 0.5) * 18,
+          i * 28,
+        );
       }
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(tick);
     };
 
-    resize();
-    window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", onMove);
-    raf = requestAnimationFrame(tick);
+    const resetPosition = () => {
+      lastX = null;
+      lastY = null;
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mousedown", onDown, { passive: true });
+    document.documentElement.addEventListener("mouseleave", resetPosition);
+
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousedown", onDown);
+      document.documentElement.removeEventListener("mouseleave", resetPosition);
+      layer.replaceChildren();
     };
   }, []);
 
-  return <canvas ref={ref} className="spark-canvas" aria-hidden />;
+  return <div ref={layerRef} className="spark-layer" aria-hidden="true" />;
 }
-

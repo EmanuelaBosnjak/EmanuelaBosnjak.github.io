@@ -70,10 +70,9 @@ export function BootLogin({ onLogin }: { onLogin: () => void }) {
           >
             log in
           </button>
-          <p className="mono text-[10px] text-muted-foreground">no real auth — visitor session</p>
+          <p className="mono text-[10px] text-muted-foreground">no real login, just a visitor session</p>
         </div>
       )}
     </div>
   );
 }
-

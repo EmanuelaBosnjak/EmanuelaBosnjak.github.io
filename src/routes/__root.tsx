@@ -77,10 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Emanuela Bošnjak Hofmaurerad — FrostOS" },
+      { title: "Emanuela Bošnjak Hofmaurerad | FrostOS" },
       { name: "description", content: "A frost-forest desktop portfolio by Emanuela Bošnjak Hofmaurerad. Explore files, mail, browse posts, and play SIGNAL//FOREST in the terminal." },
       { name: "author", content: "Emanuela Bošnjak Hofmaurerad" },
-      { property: "og:title", content: "Emanuela Bošnjak Hofmaurerad — FrostOS" },
+      { property: "og:title", content: "Emanuela Bošnjak Hofmaurerad | FrostOS" },
       { property: "og:description", content: "A desktop-OS style personal portfolio: quiet blues, translucent windows, a terminal minigame." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -120,4 +120,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

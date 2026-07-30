@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BakingRouteImport } from './routes/baking'
+import { Route as CommissionsRouteImport } from './routes/commissions'
+import { Route as PhotographyRouteImport } from './routes/photography'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BakingRoute = BakingRouteImport.update({
+  id: '/baking',
+  path: '/baking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommissionsRoute = CommissionsRouteImport.update({
+  id: '/commissions',
+  path: '/commissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotographyRoute = PhotographyRouteImport.update({
+  id: '/photography',
+  path: '/photography',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/baking': typeof BakingRoute
+  '/commissions': typeof CommissionsRoute
+  '/photography': typeof PhotographyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/baking': typeof BakingRoute
+  '/commissions': typeof CommissionsRoute
+  '/photography': typeof PhotographyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/baking': typeof BakingRoute
+  '/commissions': typeof CommissionsRoute
+  '/photography': typeof PhotographyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/baking' | '/commissions' | '/photography'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/baking' | '/commissions' | '/photography'
+  id: '__root__' | '/' | '/baking' | '/commissions' | '/photography'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BakingRoute: typeof BakingRoute
+  CommissionsRoute: typeof CommissionsRoute
+  PhotographyRoute: typeof PhotographyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/baking': {
+      id: '/baking'
+      path: '/baking'
+      fullPath: '/baking'
+      preLoaderRoute: typeof BakingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commissions': {
+      id: '/commissions'
+      path: '/commissions'
+      fullPath: '/commissions'
+      preLoaderRoute: typeof CommissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photography': {
+      id: '/photography'
+      path: '/photography'
+      fullPath: '/photography'
+      preLoaderRoute: typeof PhotographyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BakingRoute: BakingRoute,
+  CommissionsRoute: CommissionsRoute,
+  PhotographyRoute: PhotographyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

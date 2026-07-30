@@ -1,0 +1,80 @@
+export const ARTWORKS = [
+  {
+    src: "/art/moonlit-wanderer.webp",
+    name: "moonlit_wanderer",
+    title: "moonlit wanderer",
+    kind: "character illustration",
+  },
+  {
+    src: "/art/shrine-fox.webp",
+    name: "shrine_fox",
+    title: "shrine fox",
+    kind: "chibi · commission",
+  },
+  {
+    src: "/art/ember-priestess.webp",
+    name: "ember_priestess",
+    title: "ember priestess",
+    kind: "chibi · commission",
+  },
+  {
+    src: "/art/quiet-field.webp",
+    name: "quiet_field",
+    title: "quiet field",
+    kind: "full scene",
+  },
+  {
+    src: "/art/halo-on-the-railing.webp",
+    name: "halo_on_the_railing",
+    title: "halo on the railing",
+    kind: "full scene",
+  },
+  {
+    src: "/art/mask-and-flowers.webp",
+    name: "mask_and_flowers",
+    title: "mask & flowers",
+    kind: "fan art",
+  },
+  {
+    src: "/art/staff-bearer.webp",
+    name: "staff_bearer",
+    title: "staff bearer",
+    kind: "keychain design",
+  },
+  {
+    src: "/art/violet-mage.webp",
+    name: "violet_mage",
+    title: "violet mage",
+    kind: "keychain design",
+  },
+  {
+    src: "/art/avatars-collection.webp",
+    name: "avatars_collection",
+    title: "avatars collection",
+    kind: "character sheet",
+  },
+  {
+    src: "/art/reddit-hofmaurerad.webp",
+    name: "reddit_hofmaurerad",
+    title: "reddit × hofmaurerad",
+    kind: "platform display",
+  },
+  {
+    src: "/art/avatar-collection-showcase.webp",
+    name: "avatar_collection_showcase",
+    title: "avatar collection showcase",
+    kind: "platform display",
+  },
+  {
+    src: "/art/blue-kimono-study.webp",
+    name: "blue_kimono_study",
+    title: "blue kimono study",
+    kind: "character illustration",
+  },
+  {
+    src: "/art/worm-question.webp",
+    name: "worm_question",
+    title: "worm question",
+    kind: "comic illustration",
+  },
+] as const;
